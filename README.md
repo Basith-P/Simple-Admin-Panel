@@ -1,3 +1,3 @@
-# simple_admin_panel
+# Simple Admin Panel
 
 ### HabitUp R2 task
