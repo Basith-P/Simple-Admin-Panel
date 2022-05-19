@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:simple_admin_panel/config/app_colors.dart';
+
+import '../config/routes.dart' as routes;
+import '../config/app_colors.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String uname = '';
+    String paswd = '';
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -25,6 +29,7 @@ class AuthPage extends StatelessWidget {
               ),
               const SizedBox(height: 36),
               TextField(
+                onChanged: (value) => uname = value,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -41,6 +46,7 @@ class AuthPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextField(
+                onChanged: (value) => paswd = value,
                 obscureText: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -58,7 +64,17 @@ class AuthPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (uname == 'admin' && paswd == 'admin') {
+                    Navigator.of(context).pushReplacementNamed(routes.home);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Invalid username or password'),
+                      ),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(14),
                   primary: Colors.white.withOpacity(.8),
@@ -75,6 +91,7 @@ class AuthPage extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 50),
             ],
           ),
         )),
