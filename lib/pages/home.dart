@@ -1,10 +1,35 @@
 import 'package:flutter/material.dart';
 
-import '../config/app_colors.dart';
+import '../api/service.dart';
+import '../models/user_model.dart';
 import '../widgets/user_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<User> users = [];
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getUsers();
+  }
+
+  getUsers() async {
+    setState(() {
+      _isLoading = true;
+    });
+    users = await ApiService().getUsers();
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +37,26 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Users'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: 15,
-          itemBuilder: (_, i) => UserCard(
-            name: 'User $i',
-            status: 'active',
-          ),
-        ),
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : users.isEmpty
+              ? const Center(
+                  child: Text(
+                  'No users found',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                  ),
+                ))
+              : ListView.builder(
+                  padding: const EdgeInsets.all(10),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: users.length,
+                  itemBuilder: (_, i) => UserCard(
+                    name: users[i].name,
+                    status: statusValues.reverse[users[i].status].toString(),
+                  ),
+                ),
     );
   }
 }
