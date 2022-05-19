@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'config/app_theme.dart';
-import 'pages/auth.dart';
-import 'pages/home.dart';
+import 'config/routes.dart' as routes;
 
 void main() {
   runApp(const AdminPanelApp());
@@ -17,7 +16,8 @@ class AdminPanelApp extends StatelessWidget {
       title: 'Admin Panel',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: const AuthPage(),
+      onGenerateRoute: routes.generateRoute,
+      initialRoute: routes.auth,
     );
   }
 }
