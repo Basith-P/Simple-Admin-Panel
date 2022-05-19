@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_admin_panel/api/service.dart';
 
 import '../config/app_colors.dart';
 
@@ -34,31 +35,36 @@ class UserCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(name, style: const TextStyle(fontSize: 20)),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor:
-                        status == 'active' ? Colors.green : Colors.grey,
-                    radius: 5,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    status,
-                    style: const TextStyle(
-                      fontSize: 15,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(fontSize: 20),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor:
+                          status == 'active' ? Colors.green : Colors.grey,
+                      radius: 5,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    const SizedBox(width: 5),
+                    Text(
+                      status,
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           const SizedBox(width: 10),
-          const Spacer(),
           IconButton(
             onPressed: () {},
             icon: Icon(
@@ -67,7 +73,7 @@ class UserCard extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () => ApiService().getUsers(),
             icon: Icon(
               Icons.delete_rounded,
               color: Colors.red[400],
