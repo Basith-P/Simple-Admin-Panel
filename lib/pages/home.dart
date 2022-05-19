@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: users.length,
                   itemBuilder: (_, i) => UserCard(
+                    id: users[i].id,
                     name: users[i].name,
                     status: statusValues.reverse[users[i].status].toString(),
                   ),
