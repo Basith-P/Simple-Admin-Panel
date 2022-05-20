@@ -84,20 +84,20 @@ class UserDetailsPage extends StatelessWidget {
                             Navigator.pushNamedAndRemoveUntil(
                                 context, routes.home, (route) => false);
                           },
-                          child: Text('Delete'),
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 161, 70, 68),
+                            primary: const Color.fromARGB(255, 161, 70, 68),
                           ),
+                          child: const Text('Delete'),
                         ),
                       ),
                       const SizedBox(width: 15),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: Text('Edit'),
                           style: ElevatedButton.styleFrom(
                             primary: AppColors.primaryLighter,
                           ),
+                          child: const Text('Edit'),
                         ),
                       ),
                     ],

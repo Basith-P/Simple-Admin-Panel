@@ -5,7 +5,7 @@ import 'app_colors.dart';
 class AppTheme {
   static ThemeData get darkTheme => ThemeData.dark().copyWith(
         scaffoldBackgroundColor: AppColors.primaryDark,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           color: AppColors.primary,
         ),
         snackBarTheme: SnackBarThemeData(

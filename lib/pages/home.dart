@@ -60,6 +60,13 @@ class _HomePageState extends State<HomePage> {
                     status: statusValues.reverse[users[i].status].toString(),
                   ),
                 ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //add user with modal
+          Navigator.pushNamed(context, routes.addUser);
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

@@ -24,7 +24,6 @@ class ApiService {
     }
   }
 
-  //get user by id
   Future<Map> getUser(int id) async {
     var uri = Uri.parse('${ApiConstants.baseUrl}users/$id');
     final response = await client.get(uri, headers: {
@@ -38,6 +37,31 @@ class ApiService {
       return jsonDecode(json);
     } else {
       throw Exception('Failed to load user');
+    }
+  }
+
+  Future<void> addUser(User user) async {
+    var uri = Uri.parse('${ApiConstants.baseUrl}users');
+    try {
+      final response = await client.post(uri,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${SecretKeys.authToken}',
+          },
+          body: jsonEncode({
+            'name': user.name,
+            'email': user.email,
+            'status': statusValues.reverse[user.status],
+            'gender': genderValues.reverse[user.gender],
+          }));
+
+      if (response.statusCode == 201) {
+        final json = response.body;
+        print('****************SUCCESS****************');
+        return jsonDecode(json);
+      }
+    } catch (e) {
+      print('**********************$e**********************');
     }
   }
 

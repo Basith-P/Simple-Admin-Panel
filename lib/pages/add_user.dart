@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:simple_admin_panel/config/app_colors.dart';
+
+import '../config/routes.dart' as routes;
+import '../api/service.dart';
+import '../config/app_colors.dart';
+import '../models/user_model.dart';
 
 class AddUserPage extends StatelessWidget {
   const AddUserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String name;
-    String email;
-    String gender;
+    String name = '';
+    String email = '';
+    String gender = '';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add User'),
@@ -48,7 +52,18 @@ class AddUserPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          final newUser = User(
+            id: 0,
+            name: name,
+            email: email,
+            gender: genderValues.map[gender],
+            status: statusValues.map['active'],
+          );
+          await ApiService().addUser(newUser);
+          Navigator.pushNamedAndRemoveUntil(
+              context, routes.home, (route) => false);
+        },
         child: const Icon(
           Icons.check_rounded,
           color: Colors.white,
