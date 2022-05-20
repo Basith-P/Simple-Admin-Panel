@@ -10,9 +10,10 @@ class AddUserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String name = '';
-    String email = '';
-    String gender = '';
+    TextEditingController nameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController genderController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add User'),
@@ -31,21 +32,21 @@ class AddUserPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextField(
-              onChanged: (value) => name = value,
+              controller: nameController,
               decoration: const InputDecoration(
                 labelText: 'Name',
               ),
             ),
             const SizedBox(height: 10),
             TextField(
-              onChanged: (value) => email = value,
+              controller: emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
               ),
             ),
             const SizedBox(height: 10),
             TextField(
-              onChanged: (value) => gender = value,
+              controller: genderController,
               decoration:
                   const InputDecoration(labelText: 'Gender (male/female)'),
             )
@@ -54,27 +55,32 @@ class AddUserPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          if (name.isEmpty ||
-              email.isEmpty ||
-              gender.toLowerCase() != 'male' ||
-              gender.toLowerCase() != 'female') {
+          if (nameController.text.isNotEmpty &&
+              emailController.text.isNotEmpty &&
+              (genderController.text.toLowerCase() == 'male' ||
+                  genderController.text.toLowerCase() == 'female')) {
+            final newUser = User(
+              id: 0,
+              name: nameController.text,
+              email: emailController.text,
+              gender: genderValues.map[genderController.text.toLowerCase()],
+              status: statusValues.map['active'],
+            );
+            try {
+              await ApiService().addUser(newUser);
+            } catch (e) {
+              print('error: $e');
+            }
+            Navigator.pushNamedAndRemoveUntil(
+                context, routes.home, (route) => false);
+          } else {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Please fill all the fields'),
+                content: Text('Please check the enterd values'),
               ),
             );
-            return;
           }
-          final newUser = User(
-            id: 0,
-            name: name,
-            email: email,
-            gender: genderValues.map[gender.toLowerCase()],
-            status: statusValues.map['active'],
-          );
-          await ApiService().addUser(newUser);
-          Navigator.pushNamedAndRemoveUntil(
-              context, routes.home, (route) => false);
         },
         child: const Icon(
           Icons.check_rounded,
