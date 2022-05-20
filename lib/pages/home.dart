@@ -17,9 +17,11 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = false;
 
   @override
-  void initState() {
-    super.initState();
-    getUsers();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {
+      getUsers();
+    });
   }
 
   getUsers() async {
@@ -34,7 +36,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Navigator.pushNamed(context, routes.userDetails, arguments: 2525);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
