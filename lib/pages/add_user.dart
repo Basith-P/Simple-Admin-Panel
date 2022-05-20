@@ -66,13 +66,29 @@ class AddUserPage extends StatelessWidget {
               gender: genderValues.map[genderController.text.toLowerCase()],
               status: statusValues.map['active'],
             );
+            dynamic response = '';
             try {
-              await ApiService().addUser(newUser);
+              response = await ApiService().addUser(newUser);
             } catch (e) {
-              print('error: $e');
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(e.toString()),
+                ),
+              );
             }
-            Navigator.pushNamedAndRemoveUntil(
-                context, routes.home, (route) => false);
+            if (response == true) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, routes.home, (route) => false);
+            } else {
+              print(response);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(response.toString()),
+                ),
+              );
+            }
           } else {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import 'secret_keys.dart';
@@ -40,7 +41,7 @@ class ApiService {
     }
   }
 
-  Future<void> addUser(User user) async {
+  Future<dynamic> addUser(User user) async {
     var uri = Uri.parse('${ApiConstants.baseUrl}users');
     try {
       final response = await client.post(uri,
@@ -56,12 +57,14 @@ class ApiService {
           }));
 
       if (response.statusCode == 201) {
-        final json = response.body;
-        print('****************SUCCESS****************');
-        return jsonDecode(json);
+        return true;
+      } else if (response.statusCode == 422) {
+        return 'Email already exists';
+      } else {
+        throw response;
       }
     } catch (e) {
-      print('**********************$e**********************');
+      return e;
     }
   }
 
@@ -72,9 +75,11 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${SecretKeys.authToken}',
       });
-      print(response.body);
-
-      return true;
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('Failed to delete user');
+      }
     } catch (e) {
       print('**********************$e**********************');
       return false;
