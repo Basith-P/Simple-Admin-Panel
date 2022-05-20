@@ -66,17 +66,18 @@ class ApiService {
   }
 
   Future<bool> deleteUser(int id) async {
-    var uri = Uri.parse('${ApiConstants.baseUrl}users/$id');
-    final response = await client.delete(uri, headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${SecretKeys.authToken}',
-    });
-    print(response.body);
+    try {
+      var uri = Uri.parse('${ApiConstants.baseUrl}users/$id');
+      final response = await client.delete(uri, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${SecretKeys.authToken}',
+      });
+      print(response.body);
 
-    if (response.statusCode == 200) {
       return true;
-    } else {
-      throw Exception('Failed to delete user');
+    } catch (e) {
+      print('**********************$e**********************');
+      return false;
     }
   }
 }
