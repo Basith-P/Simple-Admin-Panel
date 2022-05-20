@@ -46,18 +46,30 @@ class AddUserPage extends StatelessWidget {
             const SizedBox(height: 10),
             TextField(
               onChanged: (value) => gender = value,
-              decoration: const InputDecoration(labelText: 'Gender'),
+              decoration:
+                  const InputDecoration(labelText: 'Gender (male/female)'),
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          if (name.isEmpty ||
+              email.isEmpty ||
+              gender.toLowerCase() != 'male' ||
+              gender.toLowerCase() != 'female') {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Please fill all the fields'),
+              ),
+            );
+            return;
+          }
           final newUser = User(
             id: 0,
             name: name,
             email: email,
-            gender: genderValues.map[gender],
+            gender: genderValues.map[gender.toLowerCase()],
             status: statusValues.map['active'],
           );
           await ApiService().addUser(newUser);
