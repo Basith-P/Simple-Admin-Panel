@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../config/routes.dart' as routes;
 import '../config/app_colors.dart';
-import '../api/service.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard({
@@ -70,38 +69,6 @@ class UserCard extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),
-            ),
-            const SizedBox(width: 10),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.edit_rounded,
-                color: Colors.blueGrey[200],
-              ),
-            ),
-            IconButton(
-              onPressed: () async {
-                bool deleted = await ApiService().deleteUser(id);
-                if (deleted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('User deleted'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Error deleting user'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              },
-              icon: Icon(
-                Icons.delete_rounded,
-                color: Colors.red[400],
               ),
             ),
           ],

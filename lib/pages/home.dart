@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../config/routes.dart' as routes;
 import '../api/service.dart';
 import '../models/user_model.dart';
 import '../widgets/user_card.dart';
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Navigator.pushNamed(context, routes.userDetails, arguments: 2525);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),

@@ -13,11 +13,10 @@ class AdminPanelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Admin Panel',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      onGenerateRoute: routes.generateRoute,
-      initialRoute: routes.auth,
-    );
+        title: 'Admin Panel',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.darkTheme,
+        onGenerateRoute: routes.generateRoute,
+        initialRoute: routes.home);
   }
 }
