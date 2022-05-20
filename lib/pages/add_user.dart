@@ -49,11 +49,10 @@ class AddUserPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(
+        child: const Icon(
           Icons.check_rounded,
           color: Colors.white,
         ),
-        backgroundColor: AppColors.primaryLighter,
       ),
     );
   }

@@ -86,7 +86,7 @@ class UserDetailsPage extends StatelessWidget {
                           },
                           child: Text('Delete'),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.red[400],
+                            primary: Color.fromARGB(255, 161, 70, 68),
                           ),
                         ),
                       ),
@@ -95,6 +95,9 @@ class UserDetailsPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {},
                           child: Text('Edit'),
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.primaryLighter,
+                          ),
                         ),
                       ),
                     ],
