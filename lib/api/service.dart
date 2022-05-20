@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import 'secret_keys.dart';
@@ -19,6 +21,23 @@ class ApiService {
       return userFromJson(json);
     } else {
       throw Exception('Failed to load users');
+    }
+  }
+
+  //get user by id
+  Future<Map> getUser(int id) async {
+    var uri = Uri.parse('${ApiConstants.baseUrl}users/$id');
+    final response = await client.get(uri, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${SecretKeys.authToken}',
+    });
+
+    print(response.body);
+    if (response.statusCode == 200) {
+      final json = response.body;
+      return jsonDecode(json);
+    } else {
+      throw Exception('Failed to load user');
     }
   }
 
