@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../config/routes.dart' as routes;
 import 'package:simple_admin_panel/api/service.dart';
 import '../config/app_colors.dart';
-import '../models/user_model.dart';
 
 class UserDetailsPage extends StatelessWidget {
   const UserDetailsPage({Key? key, required this.id}) : super(key: key);
@@ -33,52 +32,70 @@ class UserDetailsPage extends StatelessWidget {
               );
             } else if (snapshot.hasData) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 10),
-                  const CircleAvatar(
-                    radius: 50,
-                    backgroundColor: AppColors.primaryLighter,
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        const CircleAvatar(
+                          radius: 50,
+                          backgroundColor: AppColors.primaryLighter,
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          snapshot.data!['name'],
+                          style: const TextStyle(fontSize: 20),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          snapshot.data!['status'],
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    snapshot.data!['name'],
-                    style: const TextStyle(fontSize: 20),
-                    overflow: TextOverflow.ellipsis,
+                  const Divider(height: 30),
+                  const Text(
+                    'Email',
+                    style: TextStyle(color: Colors.blueGrey),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    snapshot.data!['email'],
-                    style: const TextStyle(fontSize: 20),
-                    overflow: TextOverflow.ellipsis,
+                  const SizedBox(height: 5),
+                  Text(snapshot.data!['email']),
+                  const SizedBox(height: 15),
+                  const Text(
+                    'Gender',
+                    style: TextStyle(color: Colors.blueGrey),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    snapshot.data!['gender'],
-                    style: const TextStyle(fontSize: 20),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  const SizedBox(height: 5),
+                  Text(snapshot.data!['gender']),
                   const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          ApiService().deleteUser(id);
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, routes.home, (route) => false);
-                        },
-                        child: Text('Delete'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red[400],
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ApiService().deleteUser(id);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, routes.home, (route) => false);
+                          },
+                          child: Text('Delete'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red[400],
+                          ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Edit'),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Edit'),
+                        ),
                       ),
                     ],
                   )
